@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-database.js"></script>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Your custom CSS file (if any)
+    <link rel="stylesheet" type="text/css" href="styles.css">-->
+</head>
+<body>
+<div class="container mt-3">
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>EmailID</th>
+				<th>Message Content</th>
+				<th>Name</th>
+                
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- Data will be dynamically populated here -->
+        </tbody>
+    </table>
+</div>
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase.js"></script>
+<script>
+  // Initialize Firebase
+   const firebaseConfig = {
+    apiKey: "AIzaSyAE7TDIX7s2RpDo5czBgQkhdbDJVQTCBik",
+    authDomain: "rescue-fcd07.firebaseapp.com",
+    databaseURL: "https://rescue-fcd07-default-rtdb.firebaseio.com",
+    projectId: "rescue-fcd07",
+    storageBucket: "rescue-fcd07.appspot.com",
+    messagingSenderId: "89782424550",
+    appId: "1:89782424550:web:759046edf4eef66e697c27",
+    measurementId: "G-7HH2P8Q657"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+
+  // Reference to your Firebase database
+  var dbRef = firebase.database().ref('rescue'); // Change to your actual reference
+
+  // Fetch data and populate the table
+  dbRef.on('value', function(snapshot) {
+    var tableBody = document.getElementById('table-body');
+    tableBody.innerHTML = ''; // Clear existing data
+
+    snapshot.forEach(function(childSnapshot) {
+      var data = childSnapshot.val();
+      var row = document.createElement('tr');
+      row.innerHTML = `<td>${data.emailid}</td><td>${data.msgContent}</td><td>${data.name}</td>`;
+      tableBody.appendChild(row);
+    });
+  });
+</script>
+</body>
+</html>
